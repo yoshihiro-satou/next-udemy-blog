@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"commonJS\"} prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^6.19.0",
     "@types/bcryptjs": "^2.4.6",
