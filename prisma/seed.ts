@@ -26,7 +26,7 @@ async function main() {
             {
               title: '2番目のブログ投稿',
               content: 'これは二つ目のブログ投稿です',
-              topImage: dummyImages[0],
+              topImage: dummyImages[1],
               published: true
             },
         ]
