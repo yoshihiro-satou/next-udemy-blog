@@ -70,8 +70,10 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
   // セッションにidを確実に含める（大事）
   callbacks: {
     async session({ session, token }) {
-      if (token.sub) {
-        session.user.id = token.sub;
+      if (session.user) {
+        session.user.id = (token.id ||token.sub || '') as string;
+        session.user.name = token.name ?? '';
+        session.user.email = token.email ?? '';
       }
       return session;
     },
