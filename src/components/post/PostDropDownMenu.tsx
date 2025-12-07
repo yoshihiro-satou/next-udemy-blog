@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
-import DeletePostDialog from "./deletePostDialog"
+import DeletePostDialog from "./DeletePostDialog"
 import { useState } from "react"
 export default function PostDropDownMenu({postId}: {postId: string}) {
   const [ isDropdownOpen, setIsDropdownOpen ] = useState(false)

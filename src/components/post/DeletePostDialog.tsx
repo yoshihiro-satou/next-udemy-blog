@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-
+import { deletePost } from "@/lib/actions/deletePost"
 type DeletePostProps = {
   postId: string;
   isOpen: boolean;
@@ -22,9 +22,9 @@ export default function DeletePostDialog({ postId, isOpen, onOpenChange}: Delete
         <AlertDialogHeader>
           <AlertDialogTitle>記事の削除</AlertDialogTitle>
           <AlertDialogDescription>
-           この記事を削除してもよろしいですか？
-           <br />
-           この操作は取り消せません。
+            この記事を削除してもよろしいですか？
+            <br />
+            この操作は取り消せません。
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
