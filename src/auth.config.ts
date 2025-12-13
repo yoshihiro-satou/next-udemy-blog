@@ -1,5 +1,5 @@
 import type { NextAuthConfig } from 'next-auth';
- 
+
 export const authConfig = {
   pages: {
     signIn: '/login',
@@ -7,16 +7,26 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
-      || nextUrl.pathname.startsWith('/manage')
+      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard') || nextUrl.pathname.startsWith('/manage');
+      const isOnLogin = nextUrl.pathname === '/login';
+
+      // 保護されたページ（dashboard/manage）で未ログインならfalse → 自動で/loginにリダイレクト
       if (isOnDashboard) {
-        if (isLoggedIn) return true;
-        return Response.redirect(new URL('/login', nextUrl));
-      } else if (isLoggedIn && nextUrl.pathname === '/login') {
-        return Response.redirect(new URL('/dashboard', nextUrl));
+        return isLoggedIn;
+      }
+
+      // ログイン済みで/loginページにアクセスしたら/dashboardにリダイレクトしたい場合
+      // （これもmiddlewareでやるのは非推奨。クライアント側やページ内で処理する方が安全）
+      // ここでは単純にtrueを返してアクセス許可（後述の代替案参照）
+      return true;
+
+      // もしログイン後/loginをブロックしたいなら：
+      
+      if (isOnLogin && isLoggedIn) {
+        return false;  // falseにすると自動でホーム（/）にリダイレクトされる（デフォルト動作）
       }
       return true;
     },
   },
-  providers: [], // Add providers with an empty array for now
+  providers: [], 
 } satisfies NextAuthConfig;
